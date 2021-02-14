@@ -1,0 +1,71 @@
+image: bash
+
+stages:
+  - test
+  - plan
+  - deploy
+
+variables:
+  TERRAFORM_VERSION: 0.14.6
+  VAULT_VERSION: 1.6.2
+  TF_VAR_vault_role: web-pipeline
+  TF_VAR_vault_backend: web-aws
+
+before_script:
+  - apk --update add curl unzip bash
+  - cd /usr/local/bin/
+  - curl https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_386.zip --output terraform.zip
+  - unzip terraform.zip
+  - curl https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_386.zip --output vault.zip
+  - unzip vault.zip
+  - cd -
+  - terraform version
+  - vault version
+
+vault_auth:
+  stage: test
+  script:
+    - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=$TF_VAR_vault_role jwt=$CI_JOB_JWT)"
+    - vault token lookup
+
+plan:
+  stage: plan
+  artifacts:
+    paths:
+      - terraform/project/
+    expire_in: 1 day
+  script:
+    # Check job's ref name
+    - echo $CI_COMMIT_REF_NAME
+    # and is this ref protected
+    - echo $CI_COMMIT_REF_PROTECTED
+    # Authenticate and get token. Token expiry time and other properties can be configured
+    # when configuring JWT Auth - https://www.vaultproject.io/api/auth/jwt#parameters-1
+    - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=$TF_VAR_vault_role jwt=$CI_JOB_JWT)"
+    # Now use the VAULT_TOKEN to provide child token and execute Terraform in AWS env
+    - cd terraform/project
+    - export TF_VAR_vault_addr=$VAULT_ADDR
+    - terraform init
+    - terraform plan
+
+apply:
+  stage: deploy
+  when: manual
+  script:
+    - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=$TF_VAR_vault_role jwt=$CI_JOB_JWT)"
+    # Now use the VAULT_TOKEN to provide child token and execute Terraform in AWS env
+    - cd terraform/project
+    - export TF_VAR_vault_addr=$VAULT_ADDR
+    - terraform init
+    - terraform apply -auto-approve
+#    - vault write -force $(terraform output -raw vault_path_db)
+
+destroy:
+  stage: deploy
+  when: manual
+  script:
+    - export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=$TF_VAR_vault_role jwt=$CI_JOB_JWT)"
+    # Now use the VAULT_TOKEN to provide child token and execute Terraform in AWS env
+    - cd terraform/project
+    - terraform init
+    - terraform destroy -auto-approve
