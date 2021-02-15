@@ -60,7 +60,7 @@ apply:
     - export TF_VAR_vault_agent_version=$VAULT_VERSION
     - terraform init
     - terraform apply -auto-approve
-#    - vault write -force $(terraform output -raw vault_path_db)
+#    - vault write -force $(terraform output -raw vault_path_db_rotate)
 
 destroy:
   stage: deploy

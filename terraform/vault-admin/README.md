@@ -73,12 +73,16 @@ You should have configure:
 }
 ```
 
+Modify the trust policy with the Vault source AWS account ID as a trust.
+
 ##### Vault assumable role for pipeline (AWS secret engine)
 
 This will use only AWS IAM managed policy (you can use least privilege with your own policy if need):
 - `AmazonRDSFullAccess`
 - `AmazonEC2FullAccess`
 - `IAMReadOnlyAccess`
+
+Modify the trust policy with the Vault source AWS account ID as a trust.
 
 ### Environment variables
 
