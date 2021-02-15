@@ -3,22 +3,12 @@ variable "region" {
   default     = "eu-west-1"
 }
 
-variable "project_name" {
-  description = "Project name (ex: web)"
-  default     = "web"
-}
-
 variable "gitlab_domain" {
   description = "The domain name of your gitlab (e.g: gitlab.com)"
 }
 
 variable "gitlab_project_id" {
   description = "The pipeline ID to authorize to auth with Vault"
-}
-
-variable "gitlab_project_branch" {
-  description = "The pipeline project branch to authorize to auth with Vault"
-  default = "master"
 }
 
 variable "vault_aws_assume_role" {
@@ -30,6 +20,15 @@ variable "application_aws_assume_role" {
 }
 
 ##### OPTIONS #####
+variable "project_name" {
+  description = "Project name (ex: web)"
+  default     = "web"
+}
+
+variable "gitlab_project_branch" {
+  description = "The pipeline project branch to authorize to auth with Vault"
+  default = "master"
+}
 
 variable "aws_secret_default_ttl"{
   description = "The default lease ttl for AWS secret engine (default: 10min)"
