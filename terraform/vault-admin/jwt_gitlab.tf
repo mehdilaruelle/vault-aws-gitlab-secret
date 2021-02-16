@@ -7,9 +7,9 @@ resource "vault_jwt_auth_backend" "gitlab" {
   default_role = "default"
 
   tune {
-    default_lease_ttl   = var.jwt_auth_tune_default_ttl
-    max_lease_ttl   = var.jwt_auth_tune_max_ttl
-    token_type = "default-service"
+    default_lease_ttl = var.jwt_auth_tune_default_ttl
+    max_lease_ttl     = var.jwt_auth_tune_max_ttl
+    token_type        = "default-service"
   }
 }
 
@@ -28,7 +28,7 @@ resource "vault_aws_auth_backend_sts_role" "role" {
 resource "vault_aws_secret_backend" "aws" {
   description = "AWS secret engine for Gitlab-CI pipeline"
   path        = "${var.project_name}-aws"
-  region = var.region
+  region      = var.region
 
   default_lease_ttl_seconds = var.aws_secret_default_ttl
   max_lease_ttl_seconds     = var.aws_secret_max_ttl

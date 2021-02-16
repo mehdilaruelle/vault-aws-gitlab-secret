@@ -27,29 +27,29 @@ variable "project_name" {
 
 variable "gitlab_project_branch" {
   description = "The pipeline project branch to authorize to auth with Vault"
-  default = "master"
+  default     = "master"
 }
 
-variable "aws_secret_default_ttl"{
+variable "aws_secret_default_ttl" {
   description = "The default lease ttl for AWS secret engine (default: 10min)"
-  default = 600
+  default     = 600
 }
 
 variable "aws_secret_max_ttl" {
   description = "The max lease ttl for AWS secret engine (default: 15min)"
-  default = 900
+  default     = 900
 }
 
 variable "jwt_token_max_ttl" {
   description = "The token max ttl for JWT auth backend (default: 15min)"
-  default = 900
+  default     = 900
 }
 
 variable "jwt_auth_tune_default_ttl" {
   description = "The tune default lease ttl for JWT auth backend (default: 10min)"
-  default = "10m"
+  default     = "10m"
 }
 variable "jwt_auth_tune_max_ttl" {
   description = "The tune max lease ttl for JWT auth backend (default: 15min)"
-  default = "15m"
+  default     = "15m"
 }

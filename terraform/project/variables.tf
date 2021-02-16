@@ -19,12 +19,12 @@ variable "region" {
 
 variable "aws_instance_type" {
   description = "The AWS instance EC2 type (default: t3.micro)"
-  default = "t3.micro"
+  default     = "t3.micro"
 }
 
 variable "aws_db_instance_class" {
   description = "The RDS instance class (default: db.t3.micro)"
-  default = "db.t3.micro"
+  default     = "db.t3.micro"
 }
 
 variable "project_name" {
@@ -49,7 +49,7 @@ variable "db_admin_username" {
 
 variable "secret_id_num_uses" {
   description = "The number uses for secret ID (default: 0)"
-  default = 0
+  default     = 0
 }
 
 variable "secret_id_ttl" {
@@ -59,7 +59,7 @@ variable "secret_id_ttl" {
 
 variable "token_num_uses" {
   description = "The number uses for token (default: 0)"
-  default = 0
+  default     = 0
 }
 
 variable "token_ttl" {
@@ -79,10 +79,10 @@ variable "db_secret_ttl" {
 
 variable "vault_agent_version" {
   description = "The Vault Agent version used (default: 1.6.2)"
-  default = "1.6.2"
+  default     = "1.6.2"
 }
 
 variable "vault_agent_parameters" {
   description = "The parameters to pass as environment variables to your Vault Agent (ex: VAULT_NAMESPACE='test')"
-  default = ""
+  default     = ""
 }

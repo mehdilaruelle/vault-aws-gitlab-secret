@@ -42,11 +42,11 @@ resource "aws_security_group" "web" {
 data "template_file" "userdata" {
   template = file("${path.module}/userdata.sh")
   vars = {
-    vault_addr = var.vault_addr
-    db_host = aws_db_instance.web.endpoint
-    db_name = aws_db_instance.web.name
-    vault_auth_path = local.aws_backend
-    vault_version = var.vault_agent_version
+    vault_addr             = var.vault_addr
+    db_host                = aws_db_instance.web.endpoint
+    db_name                = aws_db_instance.web.name
+    vault_auth_path        = local.aws_backend
+    vault_version          = var.vault_agent_version
     vault_agent_parameters = var.vault_agent_parameters
   }
 }
@@ -92,23 +92,23 @@ resource "aws_security_group" "db" {
 }
 
 resource "random_password" "password" {
-  length = 16
-  special = true
+  length           = 16
+  special          = true
   override_special = "!#$%^&*()-_=+[]{}<>:?"
 }
 
 resource "aws_db_instance" "web" {
-  allocated_storage    = 20
-  storage_type         = "gp2"
-  engine               = "mysql"
-  engine_version       = "8.0.21"
-  instance_class       = var.aws_db_instance_class
-  name                 = var.project_name
-  username             = var.db_admin_username
-  password             = random_password.password.result
-  parameter_group_name = "default.mysql8.0"
+  allocated_storage      = 20
+  storage_type           = "gp2"
+  engine                 = "mysql"
+  engine_version         = "8.0.21"
+  instance_class         = var.aws_db_instance_class
+  name                   = var.project_name
+  username               = var.db_admin_username
+  password               = random_password.password.result
+  parameter_group_name   = "default.mysql8.0"
   vpc_security_group_ids = [aws_security_group.db.id]
-  publicly_accessible = true
+  publicly_accessible    = true
 
   tags = {
     Name = var.project_name
