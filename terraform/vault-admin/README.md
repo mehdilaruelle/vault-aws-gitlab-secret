@@ -30,7 +30,14 @@ You should have configure:
 > A rework will be done
 
 ```
----
+{
+    "Version": "2012-10-17",
+    "Statement": {
+        "Effect": "Allow",
+        "Action": "sts:AssumeRole",
+        "Resource": "*"
+    }
+}
 ```
 
 ##### Vault assumable role for AWS auth backend
