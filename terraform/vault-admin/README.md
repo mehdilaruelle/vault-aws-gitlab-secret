@@ -57,24 +57,6 @@ You should have configure:
                 "iam:GetRole"
             ],
             "Resource": "*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "iam:AttachUserPolicy",
-                "iam:CreateAccessKey",
-                "iam:DeleteAccessKey",
-                "iam:DeleteUserPolicy",
-                "iam:DetachUserPolicy",
-                "iam:ListAccessKeys",
-                "iam:ListAttachedUserPolicies",
-                "iam:ListGroupsForUser",
-                "iam:ListUserPolicies",
-                "iam:PutUserPolicy",
-            ],
-            "Resource": [
-                "arn:aws:iam::ACCOUNT_ID_PROJECT:user/vault-*"
-            ]
         }
     ]
 }
