@@ -32,15 +32,15 @@ data "vault_generic_endpoint" "db_rotate" {
 
 // Allow the application to auth with AWS method
 resource "vault_aws_auth_backend_role" "web" {
-  backend             = local.aws_backend
-  role                = var.project_name
-  auth_type           = "ec2"
-  bound_ami_ids       = [data.aws_ami.amazon-linux-2.id]
-  bound_account_ids   = [data.aws_caller_identity.current.account_id]
-  bound_vpc_ids       = [data.aws_vpc.default.id]
-  bound_subnet_ids    = [aws_instance.web.subnet_id]
-  inferred_aws_region = var.region
-  token_ttl           = var.project_token_ttl
-  token_max_ttl       = var.project_token_max_ttl
-  token_policies      = ["default", var.project_name]
+  backend           = local.aws_backend
+  role              = var.project_name
+  auth_type         = "ec2"
+  bound_ami_ids     = [data.aws_ami.amazon-linux-2.id]
+  bound_account_ids = [data.aws_caller_identity.current.account_id]
+  bound_vpc_ids     = [data.aws_vpc.default.id]
+  bound_subnet_ids  = [aws_instance.web.subnet_id]
+  bound_regions     = [var.region]
+  token_ttl         = var.project_token_ttl
+  token_max_ttl     = var.project_token_max_ttl
+  token_policies    = ["default", var.project_name]
 }
