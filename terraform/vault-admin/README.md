@@ -27,8 +27,6 @@ You should have configure:
 
 ##### Vault IAM role (instance profile)
 
-> A rework will be done
-
 ```
 {
     "Version": "2012-10-17",
@@ -42,8 +40,6 @@ You should have configure:
 
 ##### Vault assumable role for AWS auth backend
 
-> A rework will be done
-
 ```
 {
     "Version": "2012-10-17",
@@ -51,10 +47,7 @@ You should have configure:
         {
             "Effect": "Allow",
             "Action": [
-                "ec2:DescribeInstances",
-                "iam:GetInstanceProfile",
-                "iam:GetUser",
-                "iam:GetRole"
+                "ec2:DescribeInstances"
             ],
             "Resource": "*"
         }
